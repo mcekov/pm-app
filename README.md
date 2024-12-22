@@ -1,4 +1,4 @@
-# masterclass-2024
+# Feature-rich Product Management App
 
 This template should help get you started developing with Vue 3 in Vite.
 
