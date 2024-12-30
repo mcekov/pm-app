@@ -7,7 +7,7 @@ const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SERVICE
 
 const seedProjects = async () => {
   const name = faker.lorem.words(2);
-  console.log('Seeding projects...');
+  console.log('Seeding db...');
 
   await supabase.from('projects').insert({
     name: faker.lorem.words(3),
