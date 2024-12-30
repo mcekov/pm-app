@@ -2,6 +2,7 @@
 import { supabase } from '@/lib/supabaseClient';
 import { ref } from 'vue';
 import type { Tables } from '../../../database/types';
+import Button from '@/components/ui/button/Button.vue';
 
 const tasks = ref<Tables<'tasks'>[] | null>(null);
 
@@ -14,9 +15,13 @@ const tasks = ref<Tables<'tasks'>[] | null>(null);
 </script>
 
 <template>
-  <div>Project Page</div>
+  <div>Tasks Page</div>
   <RouterLink to="/">Go to home</RouterLink>
-  {{ tasks }}
+  <ul>
+    <li v-for="task in tasks" key="task.id">{{ task.name }}</li>
+  </ul>
+
+  <Button>Button</Button>
 </template>
 
 <style></style>
