@@ -9,4 +9,4 @@ const route = useRoute();
   <router-link to="/projects">Go to projects</router-link>
 </template>
 
-<style lang=""></style>
+<style></style>
