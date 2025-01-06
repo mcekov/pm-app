@@ -65,5 +65,3 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
 <template>
   <DataTable v-if="tasks" :columns="columns" :data="tasks" />
 </template>
-
-<style></style>
