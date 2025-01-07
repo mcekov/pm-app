@@ -5,6 +5,7 @@ import tailwind from 'tailwindcss';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
+import AutoImport from 'unplugin-auto-import/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,6 +16,21 @@ export default defineConfig({
   },
   plugins: [
     vueRouter(),
+    AutoImport({
+      include: [
+        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+        /\.vue$/,
+        /\.vue\?vue/, // .vue
+        /\.md$/, // .md
+      ],
+      imports: [
+        // presets
+        'vue',
+        'vue-router',
+      ],
+      dts: true,
+      viteOptimizeDeps: true,
+    }),
     vue({
       template: {
         compilerOptions: {
