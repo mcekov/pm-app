@@ -29,9 +29,11 @@ export default defineConfig({
         // presets
         'vue',
         VueRouterAutoImports,
+        { pinia: ['defineStore'] },
       ],
       dts: true,
       viteOptimizeDeps: true,
+      dirs: ['src/stores'],
     }),
     Components({}),
     vue({
