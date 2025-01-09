@@ -8,12 +8,14 @@ import { RouterLink } from 'vue-router';
 
 const projects = ref<Tables<'projects'>[] | null>(null);
 
-(async () => {
+const getProjects = async () => {
   const { data, error } = await supabase.from('projects').select('*');
   if (error) console.error(error);
 
   projects.value = data;
-})();
+};
+
+await getProjects();
 
 const columns: ColumnDef<Tables<'projects'>>[] = [
   {
