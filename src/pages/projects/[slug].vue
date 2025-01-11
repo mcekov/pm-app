@@ -10,14 +10,14 @@ watch(
   () => (usePageStore().pageData.title = `Project: ${project.value?.name || ''}`),
 );
 
-const getProjects = async () => {
+const getProject = async () => {
   const { data, error } = await projectQuery(route.params.slug);
   if (error) console.error(error);
 
   project.value = data;
 };
 
-await getProjects();
+await getProject();
 </script>
 
 <template>
