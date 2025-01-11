@@ -5,6 +5,11 @@ import { useRoute } from 'vue-router';
 const route = useRoute('/tasks/[id]');
 const task = ref<Task | null>(null);
 
+watch(
+  () => task.value?.name,
+  () => (usePageStore().pageData.title = `Task: ${task.value?.name || ''}`),
+);
+
 const getTask = async () => {
   const { data, error } = await taskQuery(route.params.id);
   if (error) console.error(error);
@@ -15,11 +20,6 @@ const getTask = async () => {
 };
 
 await getTask();
-
-watch(
-  () => task.value?.name,
-  () => (usePageStore().pageData.title = `Task: ${task.value?.name || ''}`),
-);
 </script>
 
 <template>
