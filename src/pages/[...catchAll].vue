@@ -2,7 +2,7 @@
 import { useErrorStore } from '@/stores/error';
 import AppErrorPage from './AppErrorPage.vue';
 
-useErrorStore().setError('Page not found');
+useErrorStore().setError({ err: 'Page not found', customCode: 404 });
 </script>
 
 <template>

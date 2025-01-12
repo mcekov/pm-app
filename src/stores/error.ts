@@ -1,19 +1,16 @@
 import { defineStore } from 'pinia';
+import type { CustomError } from '@/types/Error';
 
 export const useErrorStore = defineStore('error-store', () => {
-  const activeError = ref<boolean>(false);
+  const activeError = ref<null | CustomError>(null);
 
-  const setError = (message: string) => {
-    activeError.value = true;
-  };
-
-  const clearError = () => {
-    activeError.value = false;
+  const setError = ({ err, customCode }: { err: string; customCode: number }) => {
+    activeError.value = Error(err);
+    activeError.value.customCode = customCode;
   };
 
   return {
     activeError,
     setError,
-    clearError,
   };
 });
