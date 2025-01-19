@@ -2,9 +2,6 @@
 const props = defineProps<{
   message: string;
   customCode: number;
-  details: string;
-  hint: string | null;
-  code: string;
   statusCode: number;
   isCustomError: boolean;
 }>();
