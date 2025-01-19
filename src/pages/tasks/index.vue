@@ -18,8 +18,6 @@ const getTasks = async () => {
 };
 
 await getTasks();
-
-jj;
 </script>
 
 <template>

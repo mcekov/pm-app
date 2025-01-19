@@ -35,6 +35,15 @@ router.afterEach(() => {
 <template>
   <section class="error">
     <AppErrorDevSection :message :customCode :statusCode :hint :code :details />
+    <!-- <AppErrorProdSection
+      :message
+      :customCode
+      :statusCode
+      :hint
+      :code
+      :details
+      :isCustomError="errorStore.isCustomError"
+    /> -->
   </section>
 </template>
 
