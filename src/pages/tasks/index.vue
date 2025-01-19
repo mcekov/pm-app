@@ -12,7 +12,7 @@ const tasks = ref<TasksWithProjects | null>(null);
 const getTasks = async () => {
   const { data, error, status } = await tasksWithProjectsQuery;
 
-  if (error) useErrorStore().setError({ error, customCode: status });
+  if (error) useErrorStore().setError({ error: Error("I'am uncaught error") });
 
   tasks.value = data;
 };
