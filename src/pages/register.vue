@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { register } from '@/utils/supabaseAuth';
+
 const formData = ref({
   username: '',
   first_name: '',
@@ -8,7 +10,15 @@ const formData = ref({
   confirm_password: '',
 });
 
-console.log(formData.value.username);
+const router = useRouter();
+
+const signup = async () => {
+  const isRegistered = await register(formData.value);
+
+  if (isRegistered) {
+    router.push('/');
+  }
+};
 </script>
 
 <template>
@@ -25,7 +35,7 @@ console.log(formData.value.username);
           <Button variant="outline" class="w-full"> Register with Google </Button>
           <Separator label="Or" />
         </div>
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit.prevent="signup">
           <div class="grid gap-2">
             <Label id="username" class="text-left">Username</Label>
             <Input
