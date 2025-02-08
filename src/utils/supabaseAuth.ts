@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { LoginForm, RegisterForm } from '@/types/AuthForm';
 
 export const register = async (formData: RegisterForm) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signUp({
     email: formData.email,
     password: formData.password,
   });
