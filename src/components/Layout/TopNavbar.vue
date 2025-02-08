@@ -9,6 +9,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { logout } from '@/utils/supabaseAuth';
+import router from '@/router';
+
+const signOut = async () => {
+  const isLoggedOut = await logout();
+
+  if (isLoggedOut) {
+    router.push('/login');
+  }
+};
 </script>
 
 <template>
@@ -33,7 +43,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+        <DropdownMenuItem @click="signOut">Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </nav>
