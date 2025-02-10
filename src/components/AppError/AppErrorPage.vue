@@ -29,8 +29,6 @@ const ErrorTemplate = import.meta.env.DEV
   ? defineAsyncComponent(() => import('./AppErrorDevSection.vue'))
   : defineAsyncComponent(() => import('./AppErrorProdSection.vue'));
 
-console.log(import.meta.env.DEV);
-
 router.afterEach(() => {
   errorStore.clearError();
 });

@@ -1,27 +1,39 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import SidebarLinks from './SidebarLinks.vue';
-import Button from '@/components/ui/button/Button.vue';
-
 const links = [
-  { title: 'Dashboard', to: '/', icon: 'lucide:house' },
-  { title: 'Projects', to: '/projects', icon: 'lucide:building-2' },
-  { title: 'My Tasks', to: '/tasks', icon: 'lucide:badge-check' },
+  {
+    title: 'Dashboard',
+    to: '/',
+    icon: 'lucide:house',
+  },
+  {
+    title: 'Projects',
+    to: '/projects',
+    icon: 'lucide:building-2',
+  },
+  {
+    title: 'My Tasks',
+    to: '/tasks',
+    icon: 'lucide:badge-check',
+  },
 ];
 
-const accountLinks = computed(() => {
-  return [
-    {
-      title: 'Profile',
-      to: ``,
-      icon: 'lucide:user',
-    },
-    {
-      title: 'Sign Out',
-      icon: 'lucide:log-out',
-    },
-  ];
-});
+const accountLinks = [
+  {
+    title: 'Profile',
+    to: '/profile',
+    icon: 'lucide:user',
+  },
+  {
+    title: 'Settings',
+    to: '/settings',
+    icon: 'lucide:settings',
+  },
+  {
+    title: 'Sign Out',
+    to: '/signout',
+    icon: 'lucide:log-out',
+  },
+];
 </script>
 
 <template>
@@ -42,6 +54,7 @@ const accountLinks = computed(() => {
       <div>
         <SidebarLinks :links="links" />
       </div>
+
       <div class="border-y text-center bg-background py-3">
         <SidebarLinks :links="accountLinks" />
       </div>
