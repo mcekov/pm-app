@@ -13,6 +13,7 @@ defineProps<{
 <template>
   <div v-for="link in links" :key="link.title">
     <RouterLink
+      @click="() => $emit('close')"
       exactActiveClass="text-primary bg-muted/60"
       v-if="link.to"
       :to="link.to"
