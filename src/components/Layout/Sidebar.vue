@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import router from '@/router';
+import { logout } from '@/utils/supabaseAuth';
+
 const links = [
   {
     title: 'Dashboard',
@@ -30,10 +33,18 @@ const accountLinks = [
   },
   {
     title: 'Sign Out',
-    to: '/signout',
     icon: 'lucide:log-out',
   },
 ];
+
+const someMethod = async (linkTitle: string) => {
+  if (linkTitle === 'Sign Out') {
+    const isLoggedOut = await logout();
+    if (isLoggedOut) {
+      router.push('/login');
+    }
+  }
+};
 </script>
 
 <template>
@@ -56,7 +67,7 @@ const accountLinks = [
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" />
+        <SidebarLinks :links="accountLinks" @onSignout="someMethod" />
       </div>
     </nav>
   </aside>
