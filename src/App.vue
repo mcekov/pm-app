@@ -10,7 +10,13 @@ onErrorCaptured((error) => {
   return false;
 });
 
-onMounted(async () => {});
+onMounted(async () => {
+  useAuthStore().trackAuthChanges();
+});
+
+function trackAuthChanges() {
+  throw new Error('Function not implemented.');
+}
 </script>
 
 <template>
