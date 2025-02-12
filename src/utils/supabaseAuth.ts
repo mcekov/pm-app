@@ -46,5 +46,8 @@ export const logout = async () => {
     return console.log(error);
   }
 
+  const authStore = useAuthStore();
+  authStore.setAuth();
+
   return true;
 };
