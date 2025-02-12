@@ -3,11 +3,11 @@ import { register } from '@/utils/supabaseAuth';
 
 const formData = ref({
   username: '',
-  first_name: '',
-  last_name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
-  confirm_password: '',
+  confirmPassword: '',
 });
 
 const router = useRouter();
@@ -55,7 +55,7 @@ const signup = async () => {
                 type="text"
                 placeholder="John"
                 required
-                v-model="formData.first_name"
+                v-model="formData.firstName"
               />
             </div>
             <div class="grid gap-2">
@@ -65,7 +65,7 @@ const signup = async () => {
                 type="text"
                 placeholder="Doe"
                 required
-                v-model="formData.last_name"
+                v-model="formData.lastName"
               />
             </div>
           </div>
@@ -100,7 +100,7 @@ const signup = async () => {
               placeholder="*****"
               autocomplete
               required
-              v-model="formData.confirm_password"
+              v-model="formData.confirmPassword"
             />
           </div>
           <Button type="submit" class="w-full"> Register </Button>
