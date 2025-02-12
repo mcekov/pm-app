@@ -30,7 +30,7 @@ const emitSignout = (title: string) => {
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </RouterLink>
 
-    <div v-else class="nav-link cursor-pointer" @click="$emit('onSignout', link.title)">
+    <div v-else class="nav-link cursor-pointer" @click="emitSignout(link.title)">
       <iconify-icon :icon="link.icon" />
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </div>

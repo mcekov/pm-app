@@ -37,9 +37,10 @@ const accountLinks = [
   },
 ];
 
-const someMethod = async (linkTitle: string) => {
+const signout = async (linkTitle: string) => {
   if (linkTitle === 'Sign Out') {
     const isLoggedOut = await logout();
+
     if (isLoggedOut) {
       router.push('/login');
     }
@@ -67,7 +68,7 @@ const someMethod = async (linkTitle: string) => {
       </div>
 
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" @onSignout="someMethod" />
+        <SidebarLinks :links="accountLinks" @onSignout="signout" />
       </div>
     </nav>
   </aside>
