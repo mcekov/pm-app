@@ -7,16 +7,18 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {
-  const { user } = storeToRefs(useAuthStore());
+router.beforeEach(async (to, from) => {
+  const authStore = useAuthStore();
+
+  await authStore.getSession();
 
   const isPublicRoute = ['/login', '/register'].includes(to.path as string);
 
-  if (!user.value && !isPublicRoute) {
+  if (!authStore.user && !isPublicRoute) {
     return { name: '/login' };
   }
 
-  if (user.value && isPublicRoute) {
+  if (authStore.user && isPublicRoute) {
     return { name: '/' };
   }
 });
