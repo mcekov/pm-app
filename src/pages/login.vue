@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { login } from '@/utils/supabaseAuth';
-import { error } from 'console';
 
 const formData = ref({
   email: '',
@@ -16,7 +15,7 @@ const signin = async () => {
 
   if (!error) router.push('/');
 
-  _error.value = error?.message;
+  _error.value = error?.message || 'An error occurred';
 };
 </script>
 
@@ -64,7 +63,7 @@ const signin = async () => {
 
         <div
           v-if="_error"
-          class="text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex w-full"
+          class="text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
           role="alert"
         >
           <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
