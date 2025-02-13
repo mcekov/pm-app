@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { login } from '@/utils/supabaseAuth';
+import { error } from 'console';
 
 const formData = ref({
   email: '',
   password: '',
 });
 
+const _error = ref('');
+
 const router = useRouter();
 
 const signin = async () => {
-  const isLoggedIn = await login(formData.value);
+  const { error } = await login(formData.value);
 
-  if (isLoggedIn) {
-    router.push('/');
-  }
+  if (!error) router.push('/');
+
+  _error.value = error?.message;
 };
 </script>
 
@@ -38,6 +41,7 @@ const signin = async () => {
               placeholder="johndoe19@example.com"
               required
               v-model="formData.email"
+              :class="{ 'border-2 border-red-500': _error }"
             />
           </div>
           <div class="grid gap-2">
@@ -51,10 +55,26 @@ const signin = async () => {
               autocomplete
               required
               v-model="formData.password"
+              :class="{ 'border-2 border-red-500': _error }"
             />
           </div>
+
           <Button type="submit" class="w-full"> Login </Button>
         </form>
+
+        <div
+          v-if="_error"
+          class="text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex w-full"
+          role="alert"
+        >
+          <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+            >Error</span
+          >
+          <ul class="text-sm text-left text-white">
+            <li v-if="_error" class="">{{ _error }}</li>
+          </ul>
+        </div>
+
         <div class="mt-4 text-sm text-center">
           Don't have an account?
           <RouterLink to="/register" class="underline"> Register </RouterLink>
