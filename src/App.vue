@@ -13,10 +13,6 @@ onErrorCaptured((error) => {
 onMounted(async () => {
   useAuthStore().trackAuthChanges();
 });
-
-function trackAuthChanges() {
-  throw new Error('Function not implemented.');
-}
 </script>
 
 <template>
