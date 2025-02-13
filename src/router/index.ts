@@ -1,3 +1,4 @@
+import { storeToRefs } from 'pinia';
 import { createRouter, createWebHistory } from 'vue-router/auto';
 import { routes } from 'vue-router/auto-routes';
 
@@ -6,11 +7,20 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-  const { getSession } = useAuthStore();
+router.beforeEach(async (to, from) => {
+  const authStore = useAuthStore();
 
-  await getSession();
-  next();
+  await authStore.getSession();
+
+  const isPublicRoute = ['/login', '/register'].includes(to.path as string);
+
+  if (!authStore.user && !isPublicRoute) {
+    return { name: '/login' };
+  }
+
+  if (authStore.user && isPublicRoute) {
+    return { name: '/' };
+  }
 });
 
 export default router;

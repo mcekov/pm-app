@@ -6,8 +6,12 @@ import { createClient } from '@supabase/supabase-js';
 const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SERVICE_ROLE_KEY);
 
 const testingUserEmail = process.env.TESTING_USER_EMAIL;
-if (!testingUserEmail) {
-  console.error('Have you forgot to add TESTING_USER_EMAIL to your .env file?');
+const testingUserPassword = process.env.TESTING_USER_PASSWORD;
+
+if (!testingUserEmail || !testingUserPassword) {
+  console.error(
+    'Have you forgot to add TESTING_USER_EMAIL or TESTING_USER_PASSWORD to your .env file?',
+  );
   process.exit();
 }
 
@@ -24,6 +28,7 @@ const logStep = (stepMessage) => {
 
 const PrimaryTestUserExists = async () => {
   logStep('Checking if primary test user exists...');
+
   const { data, error } = await supabase
     .from('profiles')
     .select('id, username')
