@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { login } from '@/utils/supabaseAuth';
+import { useFormErrors } from '@/composables/formErrors';
+
+const router = useRouter();
+const { serverError, handleServerError } = useFormErrors();
 
 const formData = ref({
   email: '',
   password: '',
 });
 
-const _error = ref('');
-
-const router = useRouter();
-
 const signin = async () => {
   const { error } = await login(formData.value);
-
   if (!error) router.push('/');
-
-  _error.value = error?.message || 'An error occurred';
+  if (error) handleServerError(error);
 };
 </script>
 
@@ -40,7 +38,7 @@ const signin = async () => {
               placeholder="johndoe19@example.com"
               required
               v-model="formData.email"
-              :class="{ 'border-2 border-red-500': _error }"
+              :class="{ 'border-2 border-red-500': serverError }"
             />
           </div>
           <div class="grid gap-2">
@@ -54,7 +52,7 @@ const signin = async () => {
               autocomplete
               required
               v-model="formData.password"
-              :class="{ 'border-2 border-red-500': _error }"
+              :class="{ 'border-2 border-red-500': serverError }"
             />
           </div>
 
@@ -62,15 +60,15 @@ const signin = async () => {
         </form>
 
         <div
-          v-if="_error"
-          class="text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
+          v-if="serverError"
+          class="w-full text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
           role="alert"
         >
           <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
             >Error</span
           >
           <ul class="text-sm text-left text-white">
-            <li v-if="_error" class="">{{ _error }}</li>
+            <li v-if="serverError" class="">{{ serverError }}</li>
           </ul>
         </div>
 
