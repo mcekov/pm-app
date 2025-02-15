@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { login } from '@/utils/supabaseAuth';
 import { useFormErrors } from '@/composables/formErrors';
+import { watchDebounced } from '@vueuse/core';
 
 const router = useRouter();
-const { serverError, handleServerError } = useFormErrors();
+
+const { serverError, handleServerError, realtimeErrors, handleLoginForm } = useFormErrors();
 
 const formData = ref({
   email: '',
@@ -15,6 +17,14 @@ const signin = async () => {
   if (!error) router.push('/');
   if (error) handleServerError(error);
 };
+
+watchDebounced(
+  formData,
+  () => {
+    handleLoginForm(formData.value);
+  },
+  { debounce: 500, deep: true },
+);
 </script>
 
 <template>
@@ -58,6 +68,36 @@ const signin = async () => {
 
           <Button type="submit" class="w-full"> Login </Button>
         </form>
+
+        <div
+          v-if="realtimeErrors?.email.length"
+          class="w-full text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
+          role="alert"
+        >
+          <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+            >Error</span
+          >
+          <ul class="text-sm text-left text-white">
+            <li v-for="error in realtimeErrors.email" :key="error">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
+
+        <div
+          v-if="realtimeErrors?.password.length"
+          class="w-full text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
+          role="alert"
+        >
+          <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+            >Error</span
+          >
+          <ul class="text-sm text-left text-white">
+            <li v-for="error in realtimeErrors.password" :key="error" class="">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
 
         <div
           v-if="serverError"
