@@ -4,13 +4,23 @@ import type { Table } from '@tanstack/vue-table';
 
 const { username } = useRoute('/users/[username]').params;
 
-const profile = ref<Table<'profiles'> | null>(null);
+type Profile = {
+  avatar_url: string | null;
+  bio: string | null;
+  created_at: string;
+  full_name: string;
+  id: string;
+  mode: string;
+  username: string;
+};
+
+const profile = ref<Profile | null>(null);
 
 const getTasks = async () => {
   const { data, error, status } = await profileQuery({ column: 'username', value: username });
   if (error) useErrorStore().setError({ error, customCode: status });
 
-  profile.value = data;
+  profile.value = data as Profile;
 };
 
 await getTasks();
