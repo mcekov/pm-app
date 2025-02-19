@@ -1,20 +1,30 @@
 <script setup lang="ts">
 import { login } from '@/utils/supabaseAuth';
+import { useFormErrors } from '@/composables/formErrors';
+import { watchDebounced } from '@vueuse/core';
+
+const router = useRouter();
+
+const { serverError, handleServerError, realtimeErrors, handleLoginForm } = useFormErrors();
 
 const formData = ref({
   email: '',
   password: '',
 });
 
-const router = useRouter();
-
 const signin = async () => {
-  const isLoggedIn = await login(formData.value);
-
-  if (isLoggedIn) {
-    router.push('/');
-  }
+  const { error } = await login(formData.value);
+  if (!error) router.push('/');
+  if (error) handleServerError(error);
 };
+
+watchDebounced(
+  formData,
+  () => {
+    handleLoginForm(formData.value);
+  },
+  { debounce: 500, deep: true },
+);
 </script>
 
 <template>
@@ -38,6 +48,7 @@ const signin = async () => {
               placeholder="johndoe19@example.com"
               required
               v-model="formData.email"
+              :class="{ 'border-2 border-red-500': serverError }"
             />
           </div>
           <div class="grid gap-2">
@@ -51,10 +62,56 @@ const signin = async () => {
               autocomplete
               required
               v-model="formData.password"
+              :class="{ 'border-2 border-red-500': serverError }"
             />
           </div>
+
           <Button type="submit" class="w-full"> Login </Button>
         </form>
+
+        <div
+          v-if="realtimeErrors?.email.length"
+          class="w-full text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
+          role="alert"
+        >
+          <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+            >Error</span
+          >
+          <ul class="text-sm text-left text-white">
+            <li v-for="error in realtimeErrors.email" :key="error">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
+
+        <div
+          v-if="realtimeErrors?.password.length"
+          class="w-full text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
+          role="alert"
+        >
+          <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+            >Error</span
+          >
+          <ul class="text-sm text-left text-white">
+            <li v-for="error in realtimeErrors.password" :key="error" class="">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
+
+        <div
+          v-if="serverError"
+          class="w-full text-center my-4 py-3 lg:px-4 p-2 bg-red-800 items-center text-red-100 leading-none lg:rounded-sm flex lg:inline-flex"
+          role="alert"
+        >
+          <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3"
+            >Error</span
+          >
+          <ul class="text-sm text-left text-white">
+            <li v-if="serverError" class="">{{ serverError }}</li>
+          </ul>
+        </div>
+
         <div class="mt-4 text-sm text-center">
           Don't have an account?
           <RouterLink to="/register" class="underline"> Register </RouterLink>
