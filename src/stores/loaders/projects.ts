@@ -8,13 +8,17 @@ export const useProjectsStore = defineStore('projects-store', () => {
 
   const validateCache = () => {
     if (projects.value?.length) {
-      projectsQuery.then(({ data }) => {
+      projectsQuery.then(({ data, error }) => {
         if (JSON.stringify(data) === JSON.stringify(projects.value)) {
           console.log('Data is not changed');
           return;
         } else {
           console.log('Something changed');
           loadProjects.delete('projects');
+
+          if (!error && data) {
+            projects.value = data;
+          }
         }
       });
     }
