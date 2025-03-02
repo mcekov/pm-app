@@ -16,10 +16,8 @@ const { getProjects } = projectsLoader;
 
 await getProjects();
 
-const { getProfilesById } = useCollaborators();
-
-const test = getProfilesById(projects.value[0].collaborators);
-console.log('🚀 ~ test:', test);
+const { getGroupedCollabs, groupedCollabs } = useCollaborators();
+if (projects.value) await getGroupedCollabs(projects.value);
 
 //getGroupCollaborators(projects.value);
 </script>
