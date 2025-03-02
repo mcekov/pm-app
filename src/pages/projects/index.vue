@@ -17,7 +17,7 @@ const { getProjects } = projectsLoader;
 await getProjects();
 
 const { getGroupedCollabs, groupedCollabs } = useCollaborators();
-if (projects.value) await getGroupedCollabs(projects.value);
+if (projects.value) getGroupedCollabs(projects.value);
 
 const columnsWithCollabs = columns(groupedCollabs);
 
