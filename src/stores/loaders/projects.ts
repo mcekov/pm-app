@@ -1,4 +1,10 @@
-import { projectQuery, projectsQuery, type Project, type Projects } from '@/utils/supabaseQueries';
+import {
+  projectQuery,
+  projectsQuery,
+  updateProjectQuery,
+  type Project,
+  type Projects,
+} from '@/utils/supabaseQueries';
 import { useMemoize } from '@vueuse/core';
 
 export const useProjectsStore = defineStore('projects-store', () => {
@@ -53,5 +59,13 @@ export const useProjectsStore = defineStore('projects-store', () => {
     validateCache({ ref: project, query: projectQuery, key: slug, loaderFn: loadProject });
   };
 
-  return { projects, getProjects, getProject, project };
+  const updateProject = async () => {
+    if (!project.value) return;
+
+    const { tasks, id, ...projectProperties } = project.value;
+
+    await updateProjectQuery(projectProperties, project.value.id);
+  };
+
+  return { projects, getProjects, getProject, project, updateProject };
 });
