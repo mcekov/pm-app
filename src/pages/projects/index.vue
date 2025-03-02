@@ -19,9 +19,11 @@ await getProjects();
 const { getGroupedCollabs, groupedCollabs } = useCollaborators();
 if (projects.value) await getGroupedCollabs(projects.value);
 
+const columnsWithCollabs = columns(groupedCollabs);
+
 //getGroupCollaborators(projects.value);
 </script>
 
 <template>
-  <DataTable v-if="projects" :columns="columns" :data="projects" />
+  <DataTable v-if="projects" :columns="columnsWithCollabs" :data="projects" />
 </template>
