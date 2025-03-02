@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { profileQuery } from '@/utils/supabaseQueries';
-import type { Table } from '@tanstack/vue-table';
+
+usePageStore().pageData.title = '';
 
 const { username } = useRoute('/users/[username]').params;
 
