@@ -46,6 +46,8 @@ const signout = async (linkTitle: string) => {
     }
   }
 };
+
+defineEmits(['taskCliked']);
 </script>
 
 <template>
@@ -64,7 +66,7 @@ const signout = async (linkTitle: string) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem> Task </DropdownMenuItem>
+          <DropdownMenuItem @click="$emit('taskCliked')"> Task </DropdownMenuItem>
           <DropdownMenuItem> Project </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
