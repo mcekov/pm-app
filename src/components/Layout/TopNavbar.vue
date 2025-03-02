@@ -11,6 +11,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { logout } from '@/utils/supabaseAuth';
 import router from '@/router';
+import { useDark, useToggle } from '@vueuse/core';
+import { storeToRefs } from 'pinia';
+
+const { profile } = storeToRefs(useAuthStore());
 
 const signOut = async () => {
   const isLoggedOut = await logout();
@@ -18,6 +22,9 @@ const signOut = async () => {
   if (isLoggedOut) {
     router.push('/login');
   }
+
+  /*   const isDark = useDark();
+  const toggleDark = useToggle(isDark); */
 };
 </script>
 
@@ -30,7 +37,7 @@ const signOut = async () => {
       ></iconify-icon>
       <Input id="search" class="w-full pl-8 bg-background" type="text" placeholder="Search ..." />
     </form>
-    <DropdownMenu>
+    <DropdownMenu v-if="profile">
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
