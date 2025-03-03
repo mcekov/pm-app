@@ -17,9 +17,9 @@ watch(
 
 await getTask(id);
 
-const { getProfilesByIds } = useCollaborators();
+const { getProfileByIds } = useCollaborators();
 
-const collabs = task.value?.collaborators ? await getProfilesByIds(task.value?.collaborators) : [];
+const collabs = task.value?.collaborators ? await getProfileByIds(task.value?.collaborators) : [];
 
 const deleteLoading = ref(false);
 const router = useRouter();

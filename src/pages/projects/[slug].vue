@@ -15,10 +15,10 @@ watch(
 
 await getProject(slug);
 
-const { getProfilesById } = useCollaborators();
+const { getProfileByIds } = useCollaborators();
 
 const collabs = project.value?.collaborators
-  ? await getProfilesById(project.value?.collaborators || [])
+  ? await getProfileByIds(project.value?.collaborators || [])
   : [];
 </script>
 

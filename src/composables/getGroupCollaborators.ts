@@ -8,7 +8,7 @@ import {
 export const useCollaborators = () => {
   const groupedCollabs = ref<GroupedCollabs>({});
 
-  const getProfilesByIds = async (userIds: string[]) => {
+  const getProfileByIds = async (userIds: string[]) => {
     const { data, error } = await groupedProfilesQuery(userIds);
 
     if (error || !data) return [];
@@ -18,7 +18,7 @@ export const useCollaborators = () => {
 
   const getGroupedCollabs = async (items: Projects | TasksWithProjects) => {
     const filteredItems = items.filter((item) => item.collaborators.length);
-    const promises = filteredItems.map((item) => getProfilesByIds(item.collaborators));
+    const promises = filteredItems.map((item) => getProfileByIds(item.collaborators));
 
     const results = await Promise.all(promises);
 
@@ -27,5 +27,5 @@ export const useCollaborators = () => {
     });
   };
 
-  return { getProfilesByIds, groupedCollabs, getGroupedCollabs };
+  return { getProfileByIds, groupedCollabs, getGroupedCollabs };
 };
