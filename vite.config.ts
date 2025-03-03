@@ -30,6 +30,7 @@ export default defineConfig({
         'vue',
         VueRouterAutoImports,
         { pinia: ['defineStore'] },
+        { 'vue-meta': ['useMeta'] },
       ],
       dts: true,
       viteOptimizeDeps: true,

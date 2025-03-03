@@ -20,6 +20,12 @@ const { getGroupedCollabs, groupedCollabs } = useCollaborators();
 if (projects.value) getGroupedCollabs(projects.value ?? []);
 
 const columnsWithCollabs = columns(groupedCollabs);
+
+useMeta({
+  title: 'Projects | PM',
+  description: 'Projects description',
+  content: 'Projects content',
+});
 </script>
 
 <template>
