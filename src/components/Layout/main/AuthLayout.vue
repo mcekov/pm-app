@@ -3,17 +3,20 @@ import TopNavbar from '@/components/Layout/TopNavbar.vue';
 import Sidebar from '@/components/Layout/Sidebar.vue';
 import { usePageStore } from '@/stores/page';
 import { storeToRefs } from 'pinia';
+import { useMenu } from '@/composables/menu';
 
 const { pageData } = storeToRefs(usePageStore());
 
 const taskSheetOpen = ref(false);
+
+const { menuOpen } = useMenu();
 </script>
 
 <template>
   <Sidebar @task-cliked="taskSheetOpen = true" />
   <AppNewTask v-model="taskSheetOpen" />
 
-  <div class="flex flex-col lg:ml-52 ml-16 transition-[margin]">
+  <div class="flex flex-col transition-[margin]" :class="{ 'ml-52': menuOpen, 'ml-24': !menuOpen }">
     <TopNavbar />
     <main class="flex flex-col flex-1 gap-4 p-4 lg:gap-4 lg:p-6">
       <div class="flex items-center">
